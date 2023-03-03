@@ -1,0 +1,34 @@
+html,body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.calculator {
+    border: 1px solid black;
+    padding: 10px 0px 10px;
+}
+
+#display {
+    width: 400px;
+    height: 80px;
+    border: 1px solid black;
+}
+
+.calculator > div{
+    display: flex;
+    justify-content: space-between;
+    gap:10px;
+    margin: 10px 20px 10px;
+}
+
+.calculator >div > button{
+    width: 100%;
+    height: 50px;
+}
