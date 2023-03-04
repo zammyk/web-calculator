@@ -50,7 +50,10 @@ function pressNum(e){
 function pressOpt(e){
     prevPressedType = this.id.substring(0,3);
     const pressedOpt = this.id.substring(3);
-    
+}
+
+function equate(e){
+    prevPressedType = this.id.substring(0,5);
 }
 
 
@@ -59,14 +62,18 @@ let prevPressedType = null;
 
 const display = document.getElementById('display');
 const digitButtons = Array.from(document.querySelectorAll('button')).filter(button => {
-    return button.id.substring(0,5) == 'digit';
+    return button.id.substring(0,5) == 'digit' || button.id == 'dotBtn';
 });
 const optButtons = Array.from(document.querySelectorAll('button')).filter(button => {
     return button.id.substring(0,3) == 'opt';
 });
+const equalBtn = document.getElementById('equalBtn');
+
+
 digitButtons.forEach(digitButton => {
     digitButton.addEventListener('click',pressNum);
 });
 optButtons.forEach(optButton => {
     optButton.addEventListener('click',pressOpt);
 });
+equalBtn.addEventListener('click',equate);
