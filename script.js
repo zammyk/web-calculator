@@ -35,21 +35,42 @@ function operate(operator,num1,num2){
     return result;
 }
 
-function updateDisplay()
+function updateDisplay(displayNum)
 {
-    display.textContent = currNum;
+    display.textContent = displayNum;
 }
 
-function pressNum(e){
-    prevPressedType = this.id.substring(0,5);
-    const pressedNum = this.id.substring(5);
-    currNum+=pressedNum;
-    updateDisplay();
+function pressNum(e, entering, button){
+    const pressedNum = button.id.substring(5);
+    if(entering == 'currNum')
+    {
+        currNum += pressedNum;
+        updateDisplay(currNum);
+    }
+    else {
+        newNum += pressedNum;
+        updateDisplay(newNum);
+    }
+    prevPressedType = button.id.substring(0,5);
 }
 
 function pressOpt(e){
-    prevPressedType = this.id.substring(0,3);
     const pressedOpt = this.id.substring(3);
+    if(prevPressedType != 'opt'){
+        if(newNum == null)
+        {
+            newNum = "0";
+            entering = 'newNum';
+        }
+        else
+        {
+            currNum = operate(currOpt,currNum,newNum);
+            updateDisplay(currNum);
+            newNum = "0";
+        }
+    }
+    currOpt = pressedOpt;
+    prevPressedType = this.id.substring(0,3);
 }
 
 function equate(e){
@@ -57,7 +78,8 @@ function equate(e){
 }
 
 
-let currNum = "0";
+let currNum = "0", newNum = null, currOpt = null;
+let entering = 'currNum';
 let prevPressedType = null;
 
 const display = document.getElementById('display');
@@ -71,9 +93,13 @@ const equalBtn = document.getElementById('equalBtn');
 
 
 digitButtons.forEach(digitButton => {
-    digitButton.addEventListener('click',pressNum);
+    digitButton.addEventListener('click',(event)=>{
+        pressNum(event,entering,digitButton);
+    });
 });
 optButtons.forEach(optButton => {
     optButton.addEventListener('click',pressOpt);
 });
 equalBtn.addEventListener('click',equate);
+
+updateDisplay("0");
