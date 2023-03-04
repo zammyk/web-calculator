@@ -84,8 +84,19 @@ function equate(e){
     prevPressedType = this.id.substring(0,5);
 }
 
+function resetValues(e){
+    currNum = "0";
+    newNum = null;
+    currOpt = null;
+    entering = 'currNum';
+    prevPressedType = null;
+    updateDisplay("0");
+}
 
-let currNum = "0", newNum = null, currOpt = null;
+
+let currNum = "0";
+let newNum = null;
+let currOpt = null;
 let entering = 'currNum';
 let prevPressedType = null;
 
@@ -97,6 +108,7 @@ const optButtons = Array.from(document.querySelectorAll('button')).filter(button
     return button.id.substring(0,3) == 'opt';
 });
 const equalBtn = document.getElementById('equalBtn');
+const clearBtn = document.getElementById('clearBtn');
 
 
 digitButtons.forEach(digitButton => {
@@ -108,5 +120,6 @@ optButtons.forEach(optButton => {
     optButton.addEventListener('click',pressOpt);
 });
 equalBtn.addEventListener('click',equate);
+clearBtn.addEventListener('click',resetValues);
 
-updateDisplay("0");
+resetValues(null);
