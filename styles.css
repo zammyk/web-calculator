@@ -1,6 +1,6 @@
 @font-face{
  font-family:'digital-clock-font';
- src: url('digital.ttf');
+ src: url('assets/digital-font.ttf');
 }
 
 html,body {
@@ -37,7 +37,7 @@ body {
 
 #display {
     margin-left: auto;
-    font-size: 60px;
+    font-size: 42px;
 }
 
 .calculator > div{
