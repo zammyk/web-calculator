@@ -74,6 +74,13 @@ function pressOpt(e){
 }
 
 function equate(e){
+    if(prevPressedType != 'equal' && currOpt!=null){
+        currNum = operate(currOpt,currNum,newNum);
+        updateDisplay(currNum);
+        entering = 'currNum';
+        newNum = null;
+        currOpt = null;
+    }
     prevPressedType = this.id.substring(0,5);
 }
 
