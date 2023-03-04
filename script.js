@@ -16,8 +16,8 @@ function divide(num1,num2) {
 
 function operate(operator,num1,num2){
     let result;
-    num1 = parseInt(num1);
-    num2 = parseInt(num2);
+    num1 = parseFloat(num1);
+    num2 = parseFloat(num2);
     switch(operator){
         case 'Add':
             result = add(num1,num2);
@@ -44,22 +44,32 @@ function fixNumberFormat(num){
     return num;
 }
 
+function fixFloatFormat(num){
+    num = String(num);
+    const dotCount = Array.from(num).reduce((total,char)=>{return char == '.'?total+1:total;},0);
+    if(dotCount > 1)
+        num = num.substring(0,num.length-1);
+    return num;
+}
+
 function updateDisplay(displayNum)
 {
     displayNum = fixNumberFormat(displayNum);
+    displayNum = fixFloatFormat(displayNum);
     display.textContent = displayNum;
+    return displayNum;
 }
 
 function pressNum(e, entering, button){
-    const pressedNum = button.id.substring(5);
+    const pressedNum = button.id == 'optDot'? '.':button.id.substring(5);
     if(entering == 'currNum')
     {
         currNum += pressedNum;
-        updateDisplay(currNum);
+        currNum = updateDisplay(currNum);
     }
     else {
         newNum += pressedNum;
-        updateDisplay(newNum);
+        newNum = updateDisplay(newNum);
     }
     prevPressedType = button.id.substring(0,5);
 }
@@ -129,10 +139,10 @@ let prevPressedType = null;
 
 const display = document.getElementById('display');
 const digitButtons = Array.from(document.querySelectorAll('button')).filter(button => {
-    return button.id.substring(0,5) == 'digit' || button.id == 'dotBtn';
+    return button.id.substring(0,5) == 'digit' || button.id == 'optDot';
 });
 const optButtons = Array.from(document.querySelectorAll('button')).filter(button => {
-    return button.id.substring(0,3) == 'opt';
+    return button.id.substring(0,3) == 'opt' && button.id != 'optDot';
 });
 const equalBtn = document.getElementById('equalBtn');
 const clearBtn = document.getElementById('clearBtn');
