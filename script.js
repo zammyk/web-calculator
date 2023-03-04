@@ -37,8 +37,16 @@ function operate(operator,num1,num2){
     return result;
 }
 
+function fixNumberFormat(num){
+    num = String(num);
+    while(num.length >1 && num.charAt(0)=='0')
+        num = num.substring(1);
+    return num;
+}
+
 function updateDisplay(displayNum)
 {
+    displayNum = fixNumberFormat(displayNum);
     display.textContent = displayNum;
 }
 
@@ -95,6 +103,23 @@ function resetValues(e){
     updateDisplay("0");
 }
 
+function deleteValue(e){
+    if(entering=='currNum')
+    {
+        currNum = String(currNum).substring(0,currNum.length-1);
+        if(currNum.length == 0)
+            currNum = "0";
+        updateDisplay(currNum);
+    }
+    else
+    {
+        newNum = String(newNum).substring(0,newNum.length-1);
+        if(newNum.length == 0)
+            newNum = "0";
+        updateDisplay(newNum);
+    }
+}
+
 
 let currNum = "0";
 let newNum = null;
@@ -111,6 +136,7 @@ const optButtons = Array.from(document.querySelectorAll('button')).filter(button
 });
 const equalBtn = document.getElementById('equalBtn');
 const clearBtn = document.getElementById('clearBtn');
+const deleteBtn = document.getElementById('deleteBtn');
 
 
 digitButtons.forEach(digitButton => {
@@ -123,5 +149,6 @@ optButtons.forEach(optButton => {
 });
 equalBtn.addEventListener('click',equate);
 clearBtn.addEventListener('click',resetValues);
+deleteBtn.addEventListener('click',deleteValue);
 
 resetValues(null);
