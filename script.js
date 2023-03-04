@@ -17,16 +17,16 @@ function divide(num1,num2) {
 function operate(operator,num1,num2){
     let result;
     switch(operator){
-        case '+':
+        case 'Add':
             result = add(num1,num2);
             break;
-        case '-':
+        case 'Subtract':
             result = subtract(num1,num2);
             break;
-        case '*':
+        case 'Multiply':
             result = multiply(num1,num2);
             break;
-        case '/':
+        case 'Divide':
             result = divide(num1,num2);
             break;
         default:
@@ -41,18 +41,32 @@ function updateDisplay()
 }
 
 function pressNum(e){
+    prevPressedType = this.id.substring(0,5);
     const pressedNum = this.id.substring(5);
     currNum+=pressedNum;
     updateDisplay();
 }
 
-let currNum = "";
+function pressOpt(e){
+    prevPressedType = this.id.substring(0,3);
+    const pressedOpt = this.id.substring(3);
+    
+}
+
+
+let currNum = "0";
+let prevPressedType = null;
 
 const display = document.getElementById('display');
 const digitButtons = Array.from(document.querySelectorAll('button')).filter(button => {
     return button.id.substring(0,5) == 'digit';
 });
-
+const optButtons = Array.from(document.querySelectorAll('button')).filter(button => {
+    return button.id.substring(0,3) == 'opt';
+});
 digitButtons.forEach(digitButton => {
     digitButton.addEventListener('click',pressNum);
+});
+optButtons.forEach(optButton => {
+    optButton.addEventListener('click',pressOpt);
 });
